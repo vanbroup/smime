@@ -7,16 +7,16 @@ jobs:
         document:
           - 'SBR.md'
     name: Build ${{ matrix.document }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Checkout old version for redline (pull request)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.sha || github.event.push.before }}
           path: old/
-      - uses: cabforum/build-guidelines-action@v2.1.2
+      - uses: docker://ghcr.io/vanbroup/build-guidelines-action:sha-d9cc1ca1
         id: build_doc
         with:
           markdown_file: ${{ matrix.document }}
